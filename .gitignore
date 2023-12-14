@@ -1,4 +1,7 @@
 /node_modules
-package-lock.json
-package.json
+camera-movements/package-lock.json
+camera-movements/package.json
+camera-movements/node_modules
 .idea/
+package.json
+package-lock.json

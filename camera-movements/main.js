@@ -1,8 +1,8 @@
 import * as  THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import {DoubleSide} from "three";
-// import * as dat from 'dat.gui';
-import * as dat from 'dat.gui';
+
+import * as dat from '/node_modules/dat.gui/build/dat.gui.module.js';
 
 
 
@@ -39,40 +39,39 @@ const sphere= new THREE.Mesh(sphereGeo,sphereMat);
 sphere.position.set(-4,8,4)
 scene.add(sphere);
 
-document.addEventListener('DOMContentLoaded', function () {
-    const gui = new dat.GUI();
-    console.log("hello");
-    const options ={
-    sphereColor:"#ffea00",
-   };
-    gui.addColor(options,'sphereColor').onChange(function(e){
-    sphere.material.color.set(e);
-    })
-});
 
-// const gui =new dat.GUI();
-// const options ={
-//     sphereColor:"#ffea00",
-//
-// };
-//
-// gui.addColor(options,'sphereColor').onChange(function(e){
-//     sphere.material.color.set(e);
-// })
+
+const gui =new dat.GUI();
+const options ={
+    sphereColor:"#ffea00",
+    wireframe: false,
+    speed : 0.01
+
+
+};
+
+gui.addColor(options,'sphereColor').onChange(function(e){
+    sphere.material.color.set(e);
+});
+gui.add(options, 'wireframe').onChange(function (e){
+    sphere.material.wireframe=e;
+})
+
+gui.add(options,'speed',0,0.03,);
+
+let step=0;
 
 function animate(){
-    cube.rotation.x +=0.01;
+    cube.rotation.x +=0.1;
     renderer.render(scene,camera);
     // Assuming 'yourObject' is your Three.js object (e.g., a mesh, group, etc.)
-
+    step+=options.speed;
+    sphere.position.y= 10 * Math.abs(Math.sin(step));
 }
 
 renderer.setAnimationLoop(animate);
 camera.position.set(14,13,-25);
 orbit.update();
 orbit.dispatchEvent({ type: 'change' });
-
-
-
 
 
